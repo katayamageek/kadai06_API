@@ -1,1 +1,1 @@
-# kadai06_API
+bingmaps_sample

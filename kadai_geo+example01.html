@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Basic template</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background: #333;
+        }
+
+        h1 {
+            padding: 0;
+            margin: 0;
+            font-size: 50%;
+            color: white;
+        }
+
+        .mouse {
+            font-size: 50%;
+            background: white;
+        }
+
+        .Infobox {
+            height: 200%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ -->
+    <!-- ▼▼▼▼ H T M L ▼▼▼▼ -->
+    <!-- ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ -->
+
+    <!-- MAP[START] -->
+    <h1>Basic template</h1>
+    <div id="myMap" style='width:100%;height:1000px;'></div>
+    <!-- MAP[END] -->
+    <!-- 音声再生用HTML -->
+    <audio id="my-audio1" src="audio/onagamure.m4a" preload="auto"></audio>
+    <audio id="my-audio2" src="audio/onaga.m4a" preload="auto"></audio>
+    <audio id="my-audio3" src="audio/uguisu.m4a" preload="auto"></audio>
+    <audio id="my-audio4" src="audio/uguisu_guzeri.m4a" preload="auto"></audio>
+    <audio id="my-audio5" src="audio/uguisu_taniwatari_keikai.m4a" preload="auto"></audio>
+    <audio id="my-audio6" src="audio/shijukara.m4a" preload="auto"></audio>
+    <audio id="my-audio7" src="audio/karasu.m4a" preload="auto"></audio>
+    <audio id="flap" src="audio/flap1.mp3" preload="auto"></audio>
+    <audio id="flap2" src="audio/kazegahuku2.mp3" preload="auto"></audio>
+    <audio id="flap3" src="audio/flyingbird.m4a" preload="auto"></audio>
+
+
+    ▼
+    <!-- ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ -->
+    <!-- ▼▼▼▼▼▼ J S ▼▼▼▼▼▼ -->
+    <!-- ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ -->
+
+    <!-- jQuery&GoogleMapsAPI -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- /jQuery&GoogleMapsAPI -->
+
+    <!-- [ MapTypeId ] https://msdn.microsoft.com/en-us/library/mt712700.aspx -->
+    <script
+        src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AozGdHYHbLOHvODc_A_zR7OSipOy4m97nAbovfqYJckpVcxMudR8WnfGJ7JcomTF'
+        async defer></script>
+    <script>
+        //Initialization processing
+
+    </script>
+
+
+
+    <!-- javascript -->
+    <script>
+        //1．成功関数：位置情報の取得に成功した時の処理
+        function mapsInit(position) {
+            //lat=緯度、lon=経度 を取得
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const map = new Microsoft.Maps.Map('#myMap', {
+                center: new Microsoft.Maps.Location(lat, lon), //Location center position
+                mapTypeId: Microsoft.Maps.MapTypeId.load, //Type: [load, aerial,canvasDark,canvasLight,birdseye,grayscale,streetside]
+                zoom: 15  //Zoom:1=zoomOut, 20=zoomUp[ 1~20 ]
+            });
+
+            // ########ここにマップ表示するスクリプトを張り付ける↓
+            //Get MAP Infomation
+            let center = map.getCenter();
+
+            //Create custom Pushpin
+            let pin = new Microsoft.Maps.Pushpin(center, {
+                color: 'red',            //Color
+                draggable: true,          //MouseDraggable
+                enableClickedStyle: true, //Click
+                enableHoverStyle: true,   //MouseOver
+                visible: true             //show/hide
+
+            });
+
+            //infoboxにタイトルと文章を
+            // let infobox = new Microsoft.Maps.Infobox(center, {
+            //     title: 'オナガ',
+            //     description: ' スズメ目カラス科. 青味がかった翼と長い尾が特徴。 <br><img src="img/onaga.jpg" width="100" height="100"/>',
+
+            //     // infoboxにイベントと関数を定義、音声再生
+            //     actions: [{
+            //         label: '鳴き声',
+            //         eventHandler: function () {
+            //             document.getElementById('my-audio1').play();
+            //             alert("再生中");
+            //         }
+            //     },
+            //         // {
+            //         //     label: 'Handler2',
+            //         //     eventHandler: function () {
+            //         //         document.getElementById('my-audio2').play();
+            //         //         alert("再生中");
+            //         //     }
+            //         // }
+            //     ]
+            // });
+
+            //Add the pushpin to the map
+            map.entities.push(pin);
+
+            // //Add infobox to Map
+            // infobox.setMap(map);
+
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼ピン1を打ち始め▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+            // Location オブジェクトの生成（プッシュピンを表示する経緯度に設定）
+            var location1 = new Microsoft.Maps.Location(35.676340, 139.695925);
+
+            // Pushpin オブジェクトの生成
+            var pin1 = new Microsoft.Maps.Pushpin(location1, { text: '' });
+
+            // 地図へプッシュピンを追加
+            map.entities.push(pin1);
+
+            // ボタンのHTMLを作成
+            // var buttonHTML = '<button onclick="switchToBirdEyeView()">Switch to Bird\'s Eye View</button>';
+
+
+            //infoboxにタイトルと文章を
+            let infobox1 = new Microsoft.Maps.Infobox(location1, {
+                title: 'オナガ',
+                description: ' 夕暮れ時の街路樹に群がって騒がしく鳴いている。<br><img src="img/onagamure.jpg" width="100" height="100"/>',
+
+                // infoboxにアクションを追加
+                actions: [{
+                    label: '鳴き声',
+                    eventHandler: function () {
+                        document.getElementById('my-audio1').play();
+                        alert("再生中");
+                    }
+                },
+                //    バードアイへの切り替え＆羽ばたき音を再生
+                {
+                    label: 'バードアイ',
+                    eventHandler: function switchToBirdEyeView() {
+                        map.setView({
+                            center: location1,
+                            zoom: 18,
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye
+                        }),
+                            document.getElementById('flap').play(),
+                            document.getElementById('flap2').play(),
+                            document.getElementById('flap3').play();
+
+                        // 
+                        // 地図のセンター位置をゆらゆら動かす
+                        var oscillationRadius = 0.0003; // 経緯度の単位で振動半径を設定
+                        var oscillationSpeed = 50; // ミリ秒単位で振動速度を設定
+                        var angle = 0;
+
+
+                        setInterval(function () {
+                            // 角度をラジアンに変換
+                            var radian = angle * (Math.PI / 180);
+
+                            // 新しいセンター位置を計算
+                            var newCenter = new Microsoft.Maps.Location(
+                                location1.latitude + oscillationRadius * Math.sin(radian),
+                                location1.longitude + oscillationRadius * Math.cos(radian)
+                            );
+
+                            // 地図のセンター位置を更新
+                            map.setView({ center: newCenter });
+
+                            // 角度を更新
+                            angle = (angle + 3) % 360;
+                        }, oscillationSpeed);
+                        // 
+
+                    }
+                }]
+            });
+
+            //Add infobox to Map
+            infobox1.setMap(map);
+
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲ピン1を打ち終わる▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼ピン2を打ち始め▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+            // Location オブジェクトの生成（プッシュピンを表示する経緯度に設定）
+            var location2 = new Microsoft.Maps.Location(35.666340, 139.695925);
+
+            // Pushpin オブジェクトの生成
+            var pin2 = new Microsoft.Maps.Pushpin(location2, { text: '' });
+
+            // 地図へプッシュピンを追加
+            map.entities.push(pin2);
+
+            //infoboxにタイトルと文章を
+            let infobox2 = new Microsoft.Maps.Infobox(location2, {
+                title: 'オナガ',
+                description: ' 朝から元気に鳴いている。<br><img src="img/onaga.jpg" width="100" height="100"/>',
+
+                // infoboxにイベントと関数を定義、音声再生
+                actions: [{
+                    label: '鳴き声',
+                    eventHandler: function () {
+                        document.getElementById('my-audio2').play();
+                        alert("再生中");
+                    }
+                },
+                //    バードアイへの切り替え＆羽ばたき音を再生
+                {
+                    label: 'バードアイ',
+                    eventHandler: function switchToBirdEyeView() {
+                        map.setView({
+                            center: location1,
+                            zoom: 18,
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye
+                        }),
+                            document.getElementById('flap').play(),
+                            document.getElementById('flap2').play(),
+                            document.getElementById('flap3').play();
+
+                        // 
+                        // 地図のセンター位置をゆらゆら動かす
+                        var oscillationRadius = 0.0003; // 経緯度の単位で振動半径を設定
+                        var oscillationSpeed = 50; // ミリ秒単位で振動速度を設定
+                        var angle = 0;
+
+
+                        setInterval(function () {
+                            // 角度をラジアンに変換
+                            var radian = angle * (Math.PI / 180);
+
+                            // 新しいセンター位置を計算
+                            var newCenter = new Microsoft.Maps.Location(
+                                location2.latitude + oscillationRadius * Math.sin(radian),
+                                location2.longitude + oscillationRadius * Math.cos(radian)
+                            );
+
+                            // 地図のセンター位置を更新
+                            map.setView({ center: newCenter });
+
+                            // 角度を更新
+                            angle = (angle + 3) % 360;
+                        }, oscillationSpeed);
+                        // 
+
+                    }
+                }]
+            });
+
+            //Add infobox to Map
+            infobox2.setMap(map);
+
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲ピン2を打ち終わる▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼ピン3を打ち始め▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+            // Location オブジェクトの生成（プッシュピンを表示する経緯度に設定）
+            var location3 = new Microsoft.Maps.Location(35.676340, 139.705925);
+
+            // Pushpin オブジェクトの生成
+            var pin3 = new Microsoft.Maps.Pushpin(location3, { text: '' });
+
+            // 地図へプッシュピンを追加
+            map.entities.push(pin3);
+
+            //infoboxにタイトルと文章を
+            let infobox3 = new Microsoft.Maps.Infobox(location3, {
+                title: 'ウグイス',
+                description: ' ウグイスの声で目覚める朝。<br><img src="img/uguisu.jpg" width="100" height="100"/>',
+
+                // infoboxにイベントと関数を定義、音声再生
+                actions: [{
+                    label: '鳴き声',
+                    eventHandler: function () {
+                        document.getElementById('my-audio3').play();
+                        alert("再生中");
+                    }
+                },
+                //    バードアイへの切り替え＆羽ばたき音を再生
+                {
+                    label: 'バードアイ',
+                    eventHandler: function switchToBirdEyeView() {
+                        map.setView({
+                            center: location1,
+                            zoom: 18,
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye
+                        }),
+                            document.getElementById('flap').play(),
+                            document.getElementById('flap2').play(),
+                            document.getElementById('flap3').play();
+
+                        // 
+                        // 地図のセンター位置をゆらゆら動かす
+                        var oscillationRadius = 0.0003; // 経緯度の単位で振動半径を設定
+                        var oscillationSpeed = 50; // ミリ秒単位で振動速度を設定
+                        var angle = 0;
+
+
+                        setInterval(function () {
+                            // 角度をラジアンに変換
+                            var radian = angle * (Math.PI / 180);
+
+                            // 新しいセンター位置を計算
+                            var newCenter = new Microsoft.Maps.Location(
+                                location3.latitude + oscillationRadius * Math.sin(radian),
+                                location3.longitude + oscillationRadius * Math.cos(radian)
+                            );
+
+                            // 地図のセンター位置を更新
+                            map.setView({ center: newCenter });
+
+                            // 角度を更新
+                            angle = (angle + 3) % 360;
+                        }, oscillationSpeed);
+                        // 
+
+                    }
+                }]
+            });
+
+            //Add infobox to Map
+            infobox3.setMap(map);
+
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲ピン3を打ち終わる▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼ピン4を打ち始め▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+            // Location オブジェクトの生成（プッシュピンを表示する経緯度に設定）
+            var location4 = new Microsoft.Maps.Location(35.675340, 139.715925);
+
+            // Pushpin オブジェクトの生成
+            var pin4 = new Microsoft.Maps.Pushpin(location4, { text: '' });
+
+            // 地図へプッシュピンを追加
+            map.entities.push(pin4);
+
+            //infoboxにタイトルと文章を
+            let infobox4 = new Microsoft.Maps.Infobox(location4, {
+                title: 'ウグイスの「ぐぜり」',
+                description: ' 鳴き声の練習中に発する下手な「ホーホケキョ」。<br><img src="img/uguisu.jpg" width="100" height="100"/>',
+
+                // infoboxにイベントと関数を定義、音声再生
+                actions: [{
+                    label: '鳴き声',
+                    eventHandler: function () {
+                        document.getElementById('my-audio4').play();
+                        alert("再生中");
+                    }
+                },
+                //    バードアイへの切り替え＆羽ばたき音を再生
+                {
+                    label: 'バードアイ',
+                    eventHandler: function switchToBirdEyeView() {
+                        map.setView({
+                            center: location1,
+                            zoom: 18,
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye
+                        }),
+                            document.getElementById('flap').play(),
+                            document.getElementById('flap2').play(),
+                            document.getElementById('flap3').play();
+
+                        // 
+                        // 地図のセンター位置をゆらゆら動かす
+                        var oscillationRadius = 0.0003; // 経緯度の単位で振動半径を設定
+                        var oscillationSpeed = 50; // ミリ秒単位で振動速度を設定
+                        var angle = 0;
+
+
+                        setInterval(function () {
+                            // 角度をラジアンに変換
+                            var radian = angle * (Math.PI / 180);
+
+                            // 新しいセンター位置を計算
+                            var newCenter = new Microsoft.Maps.Location(
+                                location4.latitude + oscillationRadius * Math.sin(radian),
+                                location4.longitude + oscillationRadius * Math.cos(radian)
+                            );
+
+                            // 地図のセンター位置を更新
+                            map.setView({ center: newCenter });
+
+                            // 角度を更新
+                            angle = (angle + 3) % 360;
+                        }, oscillationSpeed);
+                        // 
+
+                    }
+                }]
+            });
+
+            //Add infobox to Map
+            infobox4.setMap(map);
+
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲ピン4を打ち終わる▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼ピン5を打ち始め▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+            // Location オブジェクトの生成（プッシュピンを表示する経緯度に設定）
+            var location5 = new Microsoft.Maps.Location(35.666340, 139.705925);
+
+            // Pushpin オブジェクトの生成
+            var pin5 = new Microsoft.Maps.Pushpin(location5, { text: '' });
+
+            // 地図へプッシュピンを追加
+            map.entities.push(pin5);
+
+            //infoboxにタイトルと文章を
+            let infobox5 = new Microsoft.Maps.Infobox(location5, {
+                title: 'ウグイスの「警戒声」',
+                description: ' 警戒の声または谷から谷へ渡る時の声。<br><img src="img/uguisu.jpg" width="100" height="100"/>',
+
+                // infoboxにイベントと関数を定義、音声再生
+                actions: [{
+                    label: '鳴き声',
+                    eventHandler: function () {
+                        document.getElementById('my-audio5').play();
+                        alert("再生中");
+                    }
+                },
+                //    バードアイへの切り替え＆羽ばたき音を再生
+                {
+                    label: 'バードアイ',
+                    eventHandler: function switchToBirdEyeView() {
+                        map.setView({
+                            center: location1,
+                            zoom: 18,
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye
+                        }),
+                            document.getElementById('flap').play(),
+                            document.getElementById('flap2').play(),
+                            document.getElementById('flap3').play();
+
+                        // 
+                        // 地図のセンター位置をゆらゆら動かす
+                        var oscillationRadius = 0.0003; // 経緯度の単位で振動半径を設定
+                        var oscillationSpeed = 50; // ミリ秒単位で振動速度を設定
+                        var angle = 0;
+
+
+                        setInterval(function () {
+                            // 角度をラジアンに変換
+                            var radian = angle * (Math.PI / 180);
+
+                            // 新しいセンター位置を計算
+                            var newCenter = new Microsoft.Maps.Location(
+                                location5.latitude + oscillationRadius * Math.sin(radian),
+                                location5.longitude + oscillationRadius * Math.cos(radian)
+                            );
+
+                            // 地図のセンター位置を更新
+                            map.setView({ center: newCenter });
+
+                            // 角度を更新
+                            angle = (angle + 3) % 360;
+                        }, oscillationSpeed);
+                        // 
+
+                    }
+                }]
+            });
+
+            //Add infobox to Map
+            infobox5.setMap(map);
+
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲ピン5を打ち終わる▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼ピン6を打ち始め▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+            // Location オブジェクトの生成（プッシュピンを表示する経緯度に設定）
+            var location6 = new Microsoft.Maps.Location(35.686340, 139.6959825);
+
+            // Pushpin オブジェクトの生成
+            var pin6 = new Microsoft.Maps.Pushpin(location6, { text: '' });
+
+            // 地図へプッシュピンを追加
+            map.entities.push(pin6);
+
+            //infoboxにタイトルと文章を
+            let infobox6 = new Microsoft.Maps.Infobox(location6, {
+                title: 'シジュウカラ',
+                description: ' 「ツツピー」となく。<br><img src="img/shijukara.png" width="100" height="100"/>',
+
+                // infoboxにイベントと関数を定義、音声再生
+                actions: [{
+                    label: '鳴き声',
+                    eventHandler: function () {
+                        document.getElementById('my-audio6').play();
+                        alert("再生中");
+                    }
+                },
+                //    バードアイへの切り替え＆羽ばたき音を再生
+                {
+                    label: 'バードアイ',
+                    eventHandler: function switchToBirdEyeView() {
+                        map.setView({
+                            center: location1,
+                            zoom: 18,
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye
+                        }),
+                            document.getElementById('flap').play(),
+                            document.getElementById('flap2').play(),
+                            document.getElementById('flap3').play();
+
+                        // 
+                        // 地図のセンター位置をゆらゆら動かす
+                        var oscillationRadius = 0.0003; // 経緯度の単位で振動半径を設定
+                        var oscillationSpeed = 50; // ミリ秒単位で振動速度を設定
+                        var angle = 0;
+
+
+                        setInterval(function () {
+                            // 角度をラジアンに変換
+                            var radian = angle * (Math.PI / 180);
+
+                            // 新しいセンター位置を計算
+                            var newCenter = new Microsoft.Maps.Location(
+                                location6.latitude + oscillationRadius * Math.sin(radian),
+                                location6.longitude + oscillationRadius * Math.cos(radian)
+                            );
+
+                            // 地図のセンター位置を更新
+                            map.setView({ center: newCenter });
+
+                            // 角度を更新
+                            angle = (angle + 3) % 360;
+                        }, oscillationSpeed);
+                        // 
+
+                    }
+                }]
+            });
+
+            //Add infobox to Map
+            infobox6.setMap(map);
+
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲ピン6を打ち終わる▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼ピン7を打ち始め▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+            // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+
+            // Location オブジェクトの生成（プッシュピンを表示する経緯度に設定）
+            var location7 = new Microsoft.Maps.Location(35.664340, 139.683925);
+
+            // Pushpin オブジェクトの生成
+            var pin7 = new Microsoft.Maps.Pushpin(location7, { text: '' });
+
+            // 地図へプッシュピンを追加
+            map.entities.push(pin7);
+
+            //infoboxにタイトルと文章を
+            let infobox7 = new Microsoft.Maps.Infobox(location7, {
+                title: 'カラス',
+                description: ' おなじみの声。<br><img src="img/karasu.jpg" width="100" height="100"/>',
+
+                // infoboxにイベントと関数を定義、音声再生
+                actions: [{
+                    label: '鳴き声',
+                    eventHandler: function () {
+                        document.getElementById('my-audio7').play();
+                        alert("再生中");
+                    }
+                },
+                //    バードアイへの切り替え＆羽ばたき音を再生
+                {
+                    label: 'バードアイ',
+                    eventHandler: function switchToBirdEyeView() {
+                        map.setView({
+                            center: location1,
+                            zoom: 18,
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye
+                        }),
+                            document.getElementById('flap').play(),
+                            document.getElementById('flap2').play(),
+                            document.getElementById('flap3').play();
+
+                        // 
+                        // 地図のセンター位置をゆらゆら動かす
+                        var oscillationRadius = 0.0003; // 経緯度の単位で振動半径を設定
+                        var oscillationSpeed = 50; // ミリ秒単位で振動速度を設定
+                        var angle = 0;
+
+
+                        setInterval(function () {
+                            // 角度をラジアンに変換
+                            var radian = angle * (Math.PI / 180);
+
+                            // 新しいセンター位置を計算
+                            var newCenter = new Microsoft.Maps.Location(
+                                location7.latitude + oscillationRadius * Math.sin(radian),
+                                location7.longitude + oscillationRadius * Math.cos(radian)
+                            );
+
+                            // 地図のセンター位置を更新
+                            map.setView({ center: newCenter });
+
+                            // 角度を更新
+                            angle = (angle + 3) % 360;
+                        }, oscillationSpeed);
+                        // 
+
+                    }
+                }]
+            });
+
+            //Add infobox to Map
+            infobox7.setMap(map);
+
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲ピン7を打ち終わる▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+            // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
+
+
+            // ########ここにマップ表示するスクリプトを張り付ける↑
+        };
+
+        //2． 失敗関数：位置情報の取得に失敗した場合の処理
+        function mapsError(error) {
+            let e = "";
+            if (error.code == 1) { //1＝位置情報取得が許可されてない（ブラウザの設定）
+                e = "位置情報が許可されてません";
+            }
+            if (error.code == 2) { //2＝現在地を特定できない
+                e = "現在位置を特定できません";
+            }
+            if (error.code == 3) { //3＝位置情報を取得する前にタイムアウトになった場合
+                e = "位置情報を取得する前にタイムアウトになりました";
+            }
+            alert("エラー：" + e);
+        };
+
+        const set = {
+            enableHighAccuracy: true, //より高精度な位置を求める
+            maximumAge: 20000,        //最後の現在地情報取得が20秒以内であればその情報を再利用する設定
+            timeout: 10000            //10秒以内に現在地情報を取得できなければ、処理を終了
+        };
+
+        // ↓ゲットマップしたら下記を｛｝を実行するという事にする
+        function GetMap() {
+            //Main:位置情報を取得する処理 //getCurrentPosition :or: watchPosition
+            navigator.geolocation.getCurrentPosition(mapsInit, mapsError, set);
+
+
+
+
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>
